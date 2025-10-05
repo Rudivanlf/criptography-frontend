@@ -53,7 +53,7 @@
                         </div>
                         
                         <div className="dashboard-option">
-                        <p>Clique abaixo para ver a lista completa de usuários cadastrados no sistema.</p>
+                        <p>E veja um usuário cadastrado no sistema.</p>
                         {/* Link direto para a rota da lista */}
                         <Link to="/verumusuario" className="button-link">
                             Ver Todos os Usuários

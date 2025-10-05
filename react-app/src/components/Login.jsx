@@ -1,47 +1,63 @@
 import { useState } from 'react';
-// INCLUÍDO: Link para o rodapé
+
 import { useNavigate, Link } from 'react-router-dom';
 
+// ATENÇÃO: SUBSTITUA PELA URL REAL DO SEU BACKEND NO RENDER
+const RENDER_API_URL = 'https://SUA-URL-RENDER-AQUI.onrender.com'; 
+
 function Login() {
-    // 1. CORRIGIDO: Definições corretas dos estados
+    // ... (Hooks de estado e funções de manipulação de input) ...
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(''); // Correção: agora é 'error' e 'setError'
-    const [isSubmitting, setIsSubmitting] = useState(false); // INCLUÍDO: Estado de envio
+    const [error, setError] = useState(''); 
+    const [isSubmitting, setIsSubmitting] = useState(false); 
     
     const navigate = useNavigate();
 
-    // DADOS DO USUÁRIO TESTE
-    const TEST_USERNAME = 'teste';
-    const TEST_PASSWORD = '123456';
-
+  
     // FUNÇÕES: Adicionadas para controlar os inputs
     const handleUsernameChange = (e) => setUsername(e.target.value);
-    const handlePasswordChange = (e) => setPassword(e.target.value);
+    const handlePasswordChange = (e) => setPassword(e.target.value); 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError('');
-        setIsSubmitting(true); // Ativa o estado de carregamento
+        setIsSubmitting(true);
 
-        // Simula o tempo de resposta da rede
-        await new Promise(resolve => setTimeout(resolve, 1000)); 
-
-        // 2. LÓGICA DO USUÁRIO TESTE
-        if (username === TEST_USERNAME && password === TEST_PASSWORD) {
+        try {
+            const loginUrl = `${RENDER_API_URL}/login`; 
             
-            console.log("Login de Teste BEM-SUCEDIDO. Redirecionando para o Dashboard.");
-            // Redireciona para o Dashboard (rota raiz)
-            navigate('/'); 
+            const response = await fetch(loginUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }), 
+            });
 
-        } else {
-            // Lógica de erro simulado
-            setError('Credenciais de teste inválidas. Use "teste" e "123456".');
+            if (response.ok) {
+                // Login BEM-SUCEDIDO
+                const data = await response.json();
+                
+                // Opcional: Salvar token de autenticação, se o backend retornar
+                // localStorage.setItem('authToken', data.token);
+
+                console.log("Login BEM-SUCEDIDO.");
+                
+                // ALTERAÇÃO CRÍTICA AQUI: Redireciona para a rota raiz (Dashboard)
+                navigate('/dashboard'); 
+                
+            } else {
+                // ... (Tratamento de erro se as credenciais estiverem erradas)
+                const errorData = await response.json();
+                setError(errorData.message || 'Falha no login. Verifique suas credenciais.');
+            }
+        } catch (err) {
+            console.error('Erro de login:', err);
+            setError('Não foi possível conectar ao servidor. Verifique se o CORS está configurado.');
+        } finally {
+            setIsSubmitting(false);
         }
-
-        setIsSubmitting(false); // Desativa o estado de carregamento (sempre)
-        
-        // O bloco try/catch e o fetch permanecem ignorados.
     };
 
     return (
@@ -52,7 +68,7 @@ function Login() {
                 
                 <form onSubmit={handleSubmit}>
                     
-                    {/* Campo Nome de Usuário */}
+                    {/* Campos de Input */}
                     <div>
                         <label htmlFor="username">Nome de Usuário:</label>
                         <input
@@ -84,8 +100,7 @@ function Login() {
                     {/* Botão de Login */}
                     <div className="actions">
                         <button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? 'Verificando...' : 'Entrar'} 
-                            <Link to="/dashboard"></Link>
+                            {isSubmitting ? 'Entrando...' : 'Entrar'}
                         </button>
                     </div>
                     

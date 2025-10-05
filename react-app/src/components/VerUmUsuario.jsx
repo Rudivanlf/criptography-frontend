@@ -1,84 +1,102 @@
 import { useState, useEffect } from 'react';
+// INCLUÍDO: useParams para ler a URL e Link para o botão de voltar
+import { useParams, Link } from 'react-router-dom'; 
 
-/**
- * Componente para buscar e exibir os dados de um usuário específico do backend.
- * @param {object} props - As propriedades do componente.
- * @param {string|number} props.userId - O ID do usuário a ser buscado.
- */
-function VerUmUsuario({ userId }) {
+// ATENÇÃO: SUBSTITUA PELA URL BASE DO SEU BACKEND NO RENDER
+const RENDER_API_URL = 'https://SUA-URL-RENDER-AQUI.onrender.com'; 
+
+function VerUmUsuario() {
+    // 1. CORRIGIDO: Obtém o parâmetro 'username' da URL
+    const { username } = useParams(); 
+    
+    // O estado do usuário não precisa mais de um nome de ID, apenas dos dados
     const [usuario, setUsuario] = useState(null);
     const [erro, setErro] = useState('');
     const [carregando, setCarregando] = useState(false);
 
     useEffect(() => {
-        // Função para buscar os dados do usuário no backend.
-        const buscarUsuario = async () => {
-            if (!userId) {
-                setUsuario(null);
-                return;
-            }
+        // Se o username for nulo (o que não deve acontecer se a rota estiver correta)
+        if (!username) { 
+            setUsuario(null);
+            return;
+        }
 
+        const buscarUsuario = async () => {
             setCarregando(true);
             setErro('');
             setUsuario(null);
 
             try {
-                // Substitua 'http://localhost:5000/api/usuarios' pela URL real da sua API.
-               // const response = await fetch(`http://localhost:5000/api/usuarios/${userId}`);
+                // 2. CORRIGIDO: Usa a URL base do Render e o username do useParams
+                const response = await fetch(`${RENDER_API_URL}/getUserByUsername/${username}`); 
 
+                
                 if (!response.ok) {
-                    throw new Error(`Erro ao buscar usuário: ${response.statusText}`);
+                    // Trata o caso em que o usuário não é encontrado (404)
+                    throw new Error(`Usuário não encontrado: ${username}`);
                 }
 
                 const data = await response.json();
-                // Assume que a API retorna um objeto com 'username' e 'senhaCriptografada'.
-                setUsuario(data);
+                
+                // 3. ATENÇÃO: Confirme se o campo é 'senha_criptografada' ou 'password'
+                // Assumindo que o backend retorna o objeto do usuário (data)
+                setUsuario(data); 
+
             } catch (error) {
                 console.error('Falha na requisição:', error);
-                setErro('Não foi possível carregar os dados do usuário.');
+                setErro(error.message);
             } finally {
                 setCarregando(false);
             }
         };
 
         buscarUsuario();
-    }, [userId]); // O hook é executado sempre que o `userId` mudar.
+    // O hook é executado sempre que o 'username' (do useParams) mudar.
+    }, [username]); 
+
+    
 
     // Este componente renderiza a UI com os dados do usuário.
     // A lógica de seleção do usuário (que define o `userId`) deve estar em um componente pai.
     if (carregando) {
-        return <div>Carregando dados do usuário...</div>;
+        return <div className="App"><div className="card">Carregando dados de {username}...</div></div>;
     }
 
     if (erro) {
-        return <div>{erro}</div>;
+        return <div className="App"><div className="card"><p className="msg error">{erro}</p></div></div>;
     }
 
     if (!usuario) {
-        return <div>Selecione um usuário para ver os detalhes.</div>;
+        // Caso a busca retorne null
+        return <div className="App"><div className="card">Usuário não encontrado ou erro de carregamento.</div></div>;
     }
 
-    return (<div className="App">
-            <div className="card">
+    return (
+        <div className="App">
+            <div className="card user-details-card"> {/* Classe específica para estilizar */}
                 <h1>Detalhes do Usuário</h1>
                 <div className="user-details">
                     <div className="detail-item">
                         <label>Username:</label>
-                        <span>{usuario.username}</span>
+                        {/* 4. CORRIGIDO: Assume que o backend retorna 'username' */}
+                        <span className="detail-value">{usuario.username}</span> 
                     </div>
                     <div className="detail-item">
                         <label>Senha Criptografada:</label>
-                        <span>{usuario.password || 'Hash não disponível'}</span>
+                        {/* 5. ATENÇÃO: Use o nome exato do campo que o backend retorna */}
+                        <span className="encryption-data detail-value">{usuario.senha_criptografada || usuario.password || 'Hash não disponível'}</span>
                     </div>
                 </div>
-                <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                    <Link to="/dashboard" className="button-link secondary">
-                        Voltar para Dashboard
+                
+                <div className="actions" style={{ marginTop: '30px' }}>
+                    {/* Link para o Dashboard (rota raiz) */}
+                    <Link to="/" className="button-link secondary">
+                        Voltar 
                     </Link>
                 </div>
             </div>
-        </div>);
-        
+        </div>
+    );
 }
 
 export default VerUmUsuario;

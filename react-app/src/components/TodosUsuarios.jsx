@@ -1,19 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // 1. Adicionado useEffect
 import { useNavigate } from 'react-router-dom'; 
 
-
-// DADOS MOCKADOS: Usuários de teste para testar o design da lista
-const mockUsers = [
-    { id: 1, username: 'tester_alice', senha_criptografada: 'a8s7df9h8s7df9h8s7df9h' },
-    { id: 2, username: 'tester_bob', senha_criptografada: 'b3g4j5k6l7m8n9o0p1q2r3' },
-    { id: 3, username: 'tester_charlie', senha_criptografada: 'c1w2e3r4t5y6u7i8o9p0a1' },
-    { id: 4, username: 'tester_david', senha_criptografada: 'd2s3d4f5g6h7j8k9l0z1x2' },
-];
+// 2. Defina a URL BASE DA SUA API DO RENDER aqui!
+const RENDER_API_URL = 'https://SUA-URL-RENDER-AQUI.onrender.com'; 
 
 function TodosUsuarios() {
-    // CORRIGIDO: Agora definimos 'usuarios' corretamente, inicializando com dados mockados
-    const [usuarios, setUsuarios] = useState(mockUsers); 
+    // 3. Inicializado com array vazio
+    const [usuarios, setUsuarios] = useState([]); 
     const [erro, setErro] = useState(null);
+    // Adicionado estado de carregamento
+    const [isLoading, setIsLoading] = useState(true); 
     
     // INCLUÍDO: Inicialização do hook de navegação
     const navigate = useNavigate(); 
@@ -24,13 +20,42 @@ function TodosUsuarios() {
         navigate('/'); 
     };
 
-    /* O useEffect com o fetch (chamada à API) permanece COMENTADO */
+    // 4. Lógica de BUSCA DE DADOS (useEffect)
+    useEffect(() => {
+        // Funções assíncronas dentro do useEffect são uma boa prática
+        const fetchUsers = async () => {
+            setIsLoading(true);
+            try {
+                // Endpoint para buscar todos os usuários
+                const response = await fetch(`${RENDER_API_URL}/getAllUsers`); 
+                
+                if (!response.ok) {
+                    // Lança um erro para ser pego pelo catch
+                    throw new Error('Falha ao buscar dados da API. Status: ' + response.status);
+                }
+                
+                const data = await response.json();
+                setUsuarios(data);
+                setErro(null);
+                
+            } catch (error) {
+                console.error('Erro ao buscar usuários:', error);
+                setErro(error.message);
+                
+            } finally {
+                setIsLoading(false); // Fim do carregamento, sucesso ou falha
+            }
+        };
+
+        fetchUsers();
+    }, []); // Array vazio garante que o fetch seja executado apenas uma vez.
+
 
     if (erro) {
         // Reutiliza o estilo de erro do App.css
         return (
             <div className="App">
-                <div className="card">
+                <div className="card user-list-card">
                     <h1>Erro ao Carregar</h1>
                     <p className="msg error">Ocorreu um erro: {erro}</p>
                     <button onClick={handleVoltar}>Voltar</button>
@@ -39,6 +64,11 @@ function TodosUsuarios() {
         );
     }
     
+    // 5. Estado de Carregamento
+    if (isLoading) {
+        return <div className="App"><div className="card user-list-card">Carregando usuários...</div></div>;
+    }
+
     return (
         // Reutiliza a classe .App para centralizar
         <div className="App">
@@ -47,9 +77,12 @@ function TodosUsuarios() {
                 
                 <h1>Todos os Usuários Cadastrados</h1>
                 
+                {/* Exibe a lista se houver usuários, ou a mensagem de vazio */}
                 {usuarios.length > 0 ? (
                     <ul className="user-list">
                         {usuarios.map(user => (
+                            // NOTA: Os campos 'id', 'username' e 'senha_criptografada'
+                            // devem ser os mesmos nomes que seu backend retorna.
                             <li key={user.id} className="user-item">
                                 <div className="user-info">
                                     <p><strong>Username:</strong> {user.username}</p>
@@ -61,12 +94,13 @@ function TodosUsuarios() {
                         ))}
                     </ul>
                 ) : (
+                    // Mensagem se a API retornar um array vazio
                     <p>Nenhum usuário cadastrado para exibir.</p>
                 )}
 
                 <div className="actions">
                     <button onClick={handleVoltar}>
-                        Voltar para o Dashboard
+                        Voltar 
                     </button>
                 </div>
             </div>

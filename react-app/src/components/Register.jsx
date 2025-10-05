@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+// ATENÇÃO: SUBSTITUA PELA URL REAL DO SEU BACKEND NO RENDER
+const RENDER_API_URL = 'https://seu-backend.onrender.com'; 
+
 function Register() {
     // 1. Alterado: email foi substituído por username no estado
     const [formData, setFormData] = useState({
         name: '',
-        username: '', // Novo campo para Nome de Usuário
+        username: '', 
         password: '',
     });
     const [message, setMessage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Substitua pela URL da sua API no Render (mantido comentado para foco na UI)
-    // const backendUrl = 'https://seu-backend.onrender.com/users';
+    // 1. CORREÇÃO: Usar a URL base para o endpoint de cadastro
+    const registerUrl = `${RENDER_API_URL}/users`; 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,49 +25,49 @@ function Register() {
         }));
     };
 
-    // 2. Simplificado: A submissão da API foi comentada para focar na UI
+    // 2. CORRIGIDO: A submissão AGORA é apenas a chamada à API
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // Simulação de lógica de cadastro para testes de UI/UX
-        console.log("Dados de Cadastro (Simulado):", formData);
-        
+        // Verifica se há campos vazios (mesmo com 'required' no input)
+        if (!formData.name || !formData.username || !formData.password) {
+            setMessage('Preencha todos os campos.');
+            return;
+        }
+
         setIsSubmitting(true);
         setMessage('');
 
-        // Simula o tempo de espera do envio para testar o botão 'Enviando...'
-        setTimeout(() => {
-            setMessage('Cadastro simulado concluído!');
-            setIsSubmitting(false);
-            setFormData({ name: '', username: '', password: '' });
-        }, 1500);
-
-        // O BLOCO DE CÓDIGO ABAIXO ESTÁ COMENTADO PARA EVITAR O ERRO CORS E PERMITIR FOCO NO DESIGN
-        /*
         try {
-             const response = await fetch(backendUrl, {
+             const response = await fetch(registerUrl, {
                  method: 'POST',
                  headers: {
                      'Content-Type': 'application/json',
                  },
+                 // 3. CORRIGIDO: Envia o formData com nome, username e password
                  body: JSON.stringify(formData),
              });
 
              const data = await response.json();
 
              if (!response.ok) {
+                 // A API retornou um erro (ex: 400 Bad Request, 409 Conflict)
                  throw new Error(data.message || 'Ocorreu um erro ao cadastrar.');
              }
 
-             setMessage('Usuário cadastrado com sucesso!');
-             setFormData({ name: '', username: '', password: '' });
+             // Cadastro bem-sucedido
+             setMessage('Usuário cadastrado com sucesso! Você pode fazer login agora.');
+             setFormData({ name: '', username: '', password: '' }); // Limpa o formulário
 
          } catch (error) {
+             // Erro de CORS ou de rede
+             console.error('Erro de cadastro:', error);
              setMessage(error.message);
          } finally {
-             setIsSubmitting(false);
+             // 4. GARANTIDO: Desativa o botão de loading
+             setIsSubmitting(false); 
          }
-        */
+        
     };
 
     return (

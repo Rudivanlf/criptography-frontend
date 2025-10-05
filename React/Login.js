@@ -1,58 +1,72 @@
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+
+// 1. Defina a URL BASE DA SUA API DO RENDER aqui!
+const RENDER_API_URL = 'https://SUA-URL-RENDER-AQUI.onrender.com'; 
 
 function Login() {
-    const [username] = useState('');
-    const [password] = useState('');
-    const [setError] = useState('');
+    // CORREÇÃO CRÍTICA: Definindo o valor do estado E a função de atualização (setter)
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(''); 
+    const [isSubmitting, setIsSubmitting] = useState(false); // Adicionado para o botão
+    
     const navigate = useNavigate();
+
+    // Funções de manipulação de input, agora com acesso aos setters
+    const handleUsernameChange = (e) => setUsername(e.target.value);
+    const handlePasswordChange = (e) => setPassword(e.target.value); 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError('');
+        setIsSubmitting(true);
 
-        try { 
-            /*
-            // Substitua 'http://localhost:3001/login' pela URL real do seu endpoint de login no backend
-            const response = await fetch('http://localhost:3001/login', {
+        try {
+            // Endpoint para login no backend (ex: /login)
+            const loginUrl = `${RENDER_API_URL}/login`; 
+            
+            const response = await fetch(loginUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                // Envia os dados corretos do formulário
                 body: JSON.stringify({ username, password }),
             });
 
             if (response.ok) {
-                // Supondo que o backend retorne um token ou confirmação de sucesso
+                // Login BEM-SUCEDIDO
                 const data = await response.json();
                 
-                // Opcional: Salvar token de autenticação (ex: no localStorage)
-                // localStorage.setItem('authToken', data.token);
-
-                // Redireciona para a página de logado
-                navigate('/logado');
+                // Redireciona para a rota raiz (Dashboard)
+                navigate('/'); 
+                
             } else {
-                // Trata erros de login (ex: usuário ou senha incorretos)
+                // Trata erros de login (ex: 401 Unauthorized)
                 const errorData = await response.json();
                 setError(errorData.message || 'Falha no login. Verifique suas credenciais.');
             } 
-            */
+            
         } catch (err) {
-            // Trata erros de rede ou do servidor
-            setError('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
+            // Trata erros de rede (CORS ou Servidor Offline)
             console.error('Erro de login:', err);
+            setError('Não foi possível conectar ao servidor. Verifique o console.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
-      return (
-        // Usamos a classe 'App' para centralização e 'card' para o visual do container
+
+    return (
         <div className="App"> 
             <div className="card">
+                
                 <h1>Fazer Login</h1>
                 
                 <form onSubmit={handleSubmit}>
                     
-                    {/* Campo Nome de Usuário */}
+                    {/* Campos de Input (usam as funções corrigidas) */}
                     <div>
                         <label htmlFor="username">Nome de Usuário:</label>
                         <input
@@ -62,6 +76,7 @@ function Login() {
                             value={username}
                             onChange={handleUsernameChange}
                             required
+                            autoFocus
                         />
                     </div>
                     
@@ -78,7 +93,7 @@ function Login() {
                         />
                     </div>
                     
-                    {/* Botão de Login */}
+                    {/* Botão de Login (usa isSubmitting) */}
                     <div className="actions">
                         <button type="submit" disabled={isSubmitting}>
                             {isSubmitting ? 'Entrando...' : 'Entrar'}
@@ -87,7 +102,7 @@ function Login() {
                     
                 </form>
                 
-                {/* Mensagem de Erro/Sucesso */}
+                {/* Mensagem de Erro */}
                 {error && <p className="msg error">{error}</p>}
                 
                 {/* Link para o Cadastro */}
