@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom'; 
 
 // 1. Defina a URL BASE DA SUA API DO RENDER aqui!
-const RENDER_API_URL = 'https://SUA-URL-RENDER-AQUI.onrender.com'; 
+const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL; 
 
 // 2. CORRIGIDO: Não espera mais a prop 'userId'.
 function VerUmUsuario() {
@@ -104,7 +104,7 @@ function VerUmUsuario() {
                 <div className="actions" style={{ marginTop: '30px' }}>
                     {/* Botão de voltar para o Dashboard (rota raiz) */}
                     <Link to="/" className="button-link secondary">
-                        Voltar para o Dashboard
+                        Voltar 
                     </Link>
                 </div>
             </div>

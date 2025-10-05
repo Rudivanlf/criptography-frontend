@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // 1. Defina a URL BASE DA SUA API DO RENDER aqui!
-const RENDER_API_URL = 'https://seu-backend.onrender.com'; 
+const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL; 
 
 function Register() {
     const [formData, setFormData] = useState({

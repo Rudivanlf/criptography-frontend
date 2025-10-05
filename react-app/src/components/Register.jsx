@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState } from 'react';   
 import { Link } from 'react-router-dom';
 
 // ATENÇÃO: SUBSTITUA PELA URL REAL DO SEU BACKEND NO RENDER
-const RENDER_API_URL = 'https://seu-backend.onrender.com'; 
+const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL;  
 
 function Register() {
     // 1. Alterado: email foi substituído por username no estado

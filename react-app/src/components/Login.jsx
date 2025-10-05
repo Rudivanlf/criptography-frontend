@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 // ATENÇÃO: SUBSTITUA PELA URL REAL DO SEU BACKEND NO RENDER
-const RENDER_API_URL = 'https://SUA-URL-RENDER-AQUI.onrender.com'; 
+const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL; 
 
 function Login() {
     // ... (Hooks de estado e funções de manipulação de input) ...
@@ -25,7 +25,7 @@ function Login() {
         setIsSubmitting(true);
 
         try {
-            const loginUrl = `${RENDER_API_URL}/login`; 
+            const loginUrl = `${RENDER_API_URL}/users/login`; 
             
             const response = await fetch(loginUrl, {
                 method: 'POST',

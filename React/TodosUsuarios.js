@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 
 // 2. Defina a URL BASE DA SUA API DO RENDER aqui!
-const RENDER_API_URL = 'https://SUA-URL-RENDER-AQUI.onrender.com'; 
+const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL; 
 
 function TodosUsuarios() {
     const [usuarios, setUsuarios] = useState([]);
