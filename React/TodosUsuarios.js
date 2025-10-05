@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
+import './TodosUsuarios.css';
 
 function TodosUsuarios() {
-    const [setUsuarios] = useState([]);
+    const [usuarios, setUsuarios] = useState([]);
     const [erro, setErro] = useState(null);
+    const [carregando, setCarregando] = useState(true);
 
     useEffect(() => {
-        // A URL foi atualizada para usar o endpoint 'getAllUsers'.
+        setCarregando(true);
         fetch('http://localhost:3001/getAllUsers')
             .then(response => {
                 if (!response.ok) {
@@ -19,14 +21,53 @@ function TodosUsuarios() {
             .catch(error => {
                 console.error('Erro ao buscar usuários:', error);
                 setErro(error.message);
-            });
-    }, []); // O array vazio garante que o fetch seja executado apenas uma vez, quando o componente montar.
+            })
+            .finally(() => setCarregando(false));
+    }, []);
 
-    if (erro) {
-        return <div>Erro: {erro}</div>;
+    if (erro) { // Corrigido de 'se' para 'if'
+        return (
+            <div className="card" style={{ textAlign: 'center', padding: '20px' }}>
+                Erro: {erro}
+            </div>
+        );
     }
 
-    return null;
+    if (carregando) { // Corrigido de 'se' para 'if'
+        return (
+            <div className="card" style={{ textAlign: 'center', padding: '20px' }}>
+                Carregando usuários...
+            </div>
+        );
+    }
+
+    return (
+        <div className="App">
+            <div className="card">
+                <h1>Lista de Usuários</h1>
+                {usuarios.length === 0 ? (
+                    <p style={{ textAlign: 'center' }}>Nenhum usuário cadastrado.</p>
+                ) : (
+                    <table className="user-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Senha (Criptografada)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {usuarios.map((usuario, index) => (
+                                <tr key={index}>
+                                    <td>{usuario.username}</td>
+                                    <td>{usuario.password || 'Hash não disponível'}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+            </div>
+        </div>
+    );
 }
 
 export default TodosUsuarios;

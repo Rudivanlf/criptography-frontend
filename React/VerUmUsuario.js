@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import './VerUmUsuario.css';
 
 /**
  * Componente para buscar e exibir os dados de um usuário específico do backend.
@@ -42,24 +43,49 @@ function VerUmUsuario({ userId }) {
         };
 
         buscarUsuario();
-    }, [userId]); // O hook é executado sempre que o `userId` mudar.
+    }, [userId]);
 
-    // Este componente renderiza a UI com os dados do usuário.
-    // A lógica de seleção do usuário (que define o `userId`) deve estar em um componente pai.
-    if (carregando) {
-        return <div>Carregando dados do usuário...</div>;
+    if (carregando) { // Corrigido de 'se' para 'if'
+        return (
+            <div className="card">
+                <p style={{ textAlign: 'center', padding: '20px' }}>Carregando dados do usuário...</p>
+            </div>
+        );
     }
 
-    if (erro) {
-        return <div>{erro}</div>;
+    if (erro) { 
+        return (
+            <div className="card">
+                <p style={{ textAlign: 'center', padding: '20px', color: '#b00020' }}>{erro}</p>
+            </div>
+        );
     }
 
-    if (!usuario) {
-        return <div>Selecione um usuário para ver os detalhes.</div>;
+    if (!usuario) { 
+        return (
+            <div className="card">
+                <p style={{ textAlign: 'center', padding: '20px' }}>Selecione um usuário para ver os detalhes.</p>
+            </div>
+        );
     }
 
-    return (null);
-        
+    return (
+        <div className="App">
+            <div className="card">
+                <h1>Detalhes do Usuário</h1>
+                <div className="user-details">
+                    <div className="detail-item">
+                        <label>Username:</label>
+                        <span>{usuario.username}</span>
+                    </div>
+                    <div className="detail-item">
+                        <label>Senha Criptografada:</label>
+                        <span>{usuario.password || 'Hash não disponível'}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default VerUmUsuario;

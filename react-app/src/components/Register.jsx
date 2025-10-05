@@ -34,7 +34,7 @@ function Register() {
 
         // Simula o tempo de espera do envio para testar o botão 'Enviando...'
         setTimeout(() => {
-            setMessage('Cadastro simulado concluído! Foco no design.');
+            setMessage('Cadastro simulado concluído!');
             setIsSubmitting(false);
             setFormData({ name: '', username: '', password: '' });
         }, 1500);

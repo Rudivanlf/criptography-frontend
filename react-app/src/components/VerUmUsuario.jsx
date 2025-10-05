@@ -58,7 +58,26 @@ function VerUmUsuario({ userId }) {
         return <div>Selecione um usuário para ver os detalhes.</div>;
     }
 
-    return (null);
+    return (<div className="App">
+            <div className="card">
+                <h1>Detalhes do Usuário</h1>
+                <div className="user-details">
+                    <div className="detail-item">
+                        <label>Username:</label>
+                        <span>{usuario.username}</span>
+                    </div>
+                    <div className="detail-item">
+                        <label>Senha Criptografada:</label>
+                        <span>{usuario.password || 'Hash não disponível'}</span>
+                    </div>
+                </div>
+                <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                    <Link to="/dashboard" className="button-link secondary">
+                        Voltar para Dashboard
+                    </Link>
+                </div>
+            </div>
+        </div>);
         
 }
 

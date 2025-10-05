@@ -1,36 +1,34 @@
 .App {
-    display: flex;
-  align-items: center;    /* Centraliza Verticalmente */
-  justify-content: center; /* Centraliza Horizontalmente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
   background-color: #f4f6f8;
 }
 
-html, body, #root { 
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif; /* Defina uma fonte base agradável */
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8; /* Garante fundo claro */
 }
 
 .card {
-    background: #fff;
-  padding: 30px; /* Mais padding interno */
-  border-radius: 10px; /* Borda mais suave */
-  /* Nova sombra: mais sutil e elegante */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 380px; /* Largura levemente maior */
+  max-width: 380px;
+  margin: 0 auto; /* Ensures horizontal centering */
 }
 
 h1 {
- /* Reduzindo de 20px para 18px ou até menos */
-  font-size: 18px; 
-  /* Aumentar o espaçamento inferior para separar do primeiro campo */
-  margin: 0 0 20px; 
-  /* Centralizar o texto dentro do cartão */
-  text-align: center; 
-  color: #333; /* Cor escura para melhor legibilidade */
+  font-size: 18px;
+  margin: 0 0 20px;
+  text-align: center;
+  color: #333;
 }
 
 label {
@@ -49,11 +47,11 @@ input[type=email] {
   width: 100%;
   padding: 10px;
   border: 1px solid #d9e0e8; 
-   transition: all 0.3s ease;
+  transition: all 0.3s ease;
   border-radius: 6px;
   font-size: 14px;
   box-sizing: border-box; 
-   /* Tira o fundo preto e coloca branco/claro */
+  /* Tira o fundo preto e coloca branco/claro */
   background-color: #fff; 
   /* Define uma borda clara para separar os campos */
   border: 1px solid #d9e0e8; 
@@ -76,6 +74,15 @@ input[type=email]:focus {
   border-color: #0b74ff;
   /* Efeito de brilho sutil para melhor UX. Cor do brilho é a primária com transparência. */
   box-shadow: 0 0 0 3px rgba(11, 116, 255, 0.2);
+} 
+
+.dashboard-card {
+    padding: 20px;
+    max-width: 500px; /* Ajuste conforme necessário */
+}
+
+.dashboard-option {
+    margin-bottom: 20px;
 }
 
 .actions {
@@ -125,4 +132,46 @@ button:disabled {
 .button-link.secondary {
   background: #e6eef9;
   color: #0b3a66;
+}
+
+/* Estilos da tabela de TodosUsuarios integrados */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff; /* Fundo branco para contraste */
+}
+
+.user-table th,
+.user-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #0175f8;
+  color: #000000; /* Cor preta para maior visibilidade */
+}
+
+.user-table th {
+  background-color: #0b74ff;
+  color: #fff; /* Texto branco nos cabeçalhos para contraste com fundo azul */
+  font-weight: 600;
+}
+
+.user-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Fundo claro alternado */
+}
+
+.user-table tr:hover {
+  background-color: #e6eef9;
+  transition: background-color 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .user-table {
+      display: block;
+      overflow-x: auto;
+  }
+  .user-table th,
+  .user-table td {
+      min-width: 150px;
+  }
 }
