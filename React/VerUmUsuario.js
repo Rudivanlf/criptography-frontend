@@ -29,7 +29,7 @@ function VerUmUsuario() {
 
             try {
                 // 3. CORRIGIDO: Usa a URL do Render e o username da URL
-                const response = await fetch(`${RENDER_API_URL}/getUserByUsername/${username}`);
+                const response = await fetch(`${VITE_RENDER_API_URL}/getUserByUsername/${username}`);
 
                 if (!response.ok) {
                     // Se o usuário não for encontrado (404), lança erro.

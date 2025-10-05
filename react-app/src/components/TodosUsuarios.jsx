@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'; // 1. Adicionado useEffect
 import { useNavigate } from 'react-router-dom'; 
 
 // 2. Defina a URL BASE DA SUA API DO RENDER aqui!
-const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL; 
+const apiUrl = import.meta.env.VITE_API_URL; 
 
 function TodosUsuarios() {
     // 3. Inicializado com array vazio
@@ -27,7 +27,7 @@ function TodosUsuarios() {
             setIsLoading(true);
             try {
                 // Endpoint para buscar todos os usuários
-                const response = await fetch(`${RENDER_API_URL}/users/all`); 
+                const response = await fetch(`${VITE_API_URL}/users/all`); 
                 
                 if (!response.ok) {
                     // Lança um erro para ser pego pelo catch

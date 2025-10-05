@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // 1. Defina a URL BASE DA SUA API DO RENDER aqui!
-const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL; 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ function Register() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // 2. Endpoint correto para cadastro
-    const registerUrl = `${RENDER_API_URL}/users`; 
+    const apiUrl = `${VITE_API_URL}/users`; 
 
     const handleChange = (e) => {
         const { name, value } = e.target;

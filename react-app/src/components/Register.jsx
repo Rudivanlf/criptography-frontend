@@ -15,7 +15,7 @@ function Register() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // 1. CORREÇÃO: Usar a URL base para o endpoint de cadastro
-    const registerUrl = `${RENDER_API_URL}/users`; 
+    const registerUrl = `${VITE_RENDER_API_URL}/users`; 
 
     const handleChange = (e) => {
         const { name, value } = e.target;

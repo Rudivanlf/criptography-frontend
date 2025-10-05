@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom'; 
 
 // ATENÇÃO: SUBSTITUA PELA URL BASE DO SEU BACKEND NO RENDER
-const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL; 
+const apiUrl = import.meta.env.VITE_API_URL; 
 
 function VerUmUsuario() {
     // 1. CORRIGIDO: Obtém o parâmetro 'username' da URL
@@ -28,7 +28,7 @@ function VerUmUsuario() {
 
             try {
                 // 2. CORRIGIDO: Usa a URL base do Render e o username do useParams
-                const response = await fetch(`${RENDER_API_URL}/users/${id}`); 
+                const response = await fetch(`${VITE_API_URL}/users/${id}`); 
 
                 
                 if (!response.ok) {

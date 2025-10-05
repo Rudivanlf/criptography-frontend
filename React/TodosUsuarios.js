@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 
 // 2. Defina a URL BASE DA SUA API DO RENDER aqui!
-const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL; 
+const apiUrl = import.meta.env.VITE_API_URL; 
 
 function TodosUsuarios() {
     const [usuarios, setUsuarios] = useState([]);
@@ -23,7 +23,7 @@ function TodosUsuarios() {
         setCarregando(true);
 
         // 5. CORRIGIDO: Usa a URL do Render
-        fetch(`${RENDER_API_URL}/getAllUsers`)
+        fetch(`${VITE_API_URL}/getAllUsers`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Falha ao buscar dados da API');
