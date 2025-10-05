@@ -1,0 +1,128 @@
+.App {
+    display: flex;
+  align-items: center;    /* Centraliza Verticalmente */
+  justify-content: center; /* Centraliza Horizontalmente */
+  min-height: 100vh;
+  background-color: #f4f6f8;
+}
+
+html, body, #root { 
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* Defina uma fonte base agradável */
+}
+
+.card {
+    background: #fff;
+  padding: 30px; /* Mais padding interno */
+  border-radius: 10px; /* Borda mais suave */
+  /* Nova sombra: mais sutil e elegante */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+  width: 100%;
+  max-width: 380px; /* Largura levemente maior */
+}
+
+h1 {
+ /* Reduzindo de 20px para 18px ou até menos */
+  font-size: 18px; 
+  /* Aumentar o espaçamento inferior para separar do primeiro campo */
+  margin: 0 0 20px; 
+  /* Centralizar o texto dentro do cartão */
+  text-align: center; 
+  color: #333; /* Cor escura para melhor legibilidade */
+}
+
+label {
+  /* De 13px para 14px */
+  font-size: 14px;
+  /* Aumentar o espaçamento */
+  margin: 16px 0 8px;
+  /* Adicionar peso para leitura */
+  font-weight: 500;
+  color: #333; /* Cor mais escura para melhor contraste */
+}
+
+input[type=text],
+input[type=password],
+input[type=email] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d9e0e8; 
+   transition: all 0.3s ease;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box; 
+   /* Tira o fundo preto e coloca branco/claro */
+  background-color: #fff; 
+  /* Define uma borda clara para separar os campos */
+  border: 1px solid #d9e0e8; 
+  /* Remove o preenchimento preto para exibir o texto */
+  color: #333; 
+  /* Adiciona um padding para o texto não ficar colado na borda */
+  padding: 10px;
+  /* Garante que eles ocupem a largura total do card */
+  width: 100%; 
+  box-sizing: border-box;
+  margin-bottom: 12px; /* Adiciona espaço entre os campos */
+} 
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus {
+  /* Remove a borda padrão que aparece no focus */
+  outline: none;
+  /* Borda colorida para destacar o campo ativo */
+  border-color: #0b74ff;
+  /* Efeito de brilho sutil para melhor UX. Cor do brilho é a primária com transparência. */
+  box-shadow: 0 0 0 3px rgba(11, 116, 255, 0.2);
+}
+
+.actions {
+  margin-top: 18px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: 0;
+  border-radius: 6px;
+  background: #0b74ff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #a0c7ff;
+  cursor: not-allowed;
+}
+
+.msg {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.error {
+  color: #b00020;
+}
+
+.success {
+  color: #007a3d;
+}
+
+.button-link {
+  display: block;
+  padding: 10px;
+  border-radius: 6px;
+  background: #0b74ff;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button-link.secondary {
+  background: #e6eef9;
+  color: #0b3a66;
+}
