@@ -52,9 +52,13 @@
                             />
                         </div>
                         
-                        <button onClick={handleSearch} disabled={!searchUsername.trim()}>
-                            Buscar Usuário
-                        </button>
+                        <div className="dashboard-option">
+                        <p>Clique abaixo para ver a lista completa de usuários cadastrados no sistema.</p>
+                        {/* Link direto para a rota da lista */}
+                        <Link to="/verumusuario" className="button-link">
+                            Ver Todos os Usuários
+                        </Link>
+                    </div>
                     </div>
                 </div>
             </div>
