@@ -25,7 +25,7 @@ function Login() {
         setIsSubmitting(true);
 
         try {
-            const loginUrl = `${VITE_RENDER_API_URL}/users/login`; 
+            const loginUrl = `${import.meta.env.VITE_RENDER_API_URL}/users/login`; 
             
             const response = await fetch(loginUrl, {
                 method: 'POST',

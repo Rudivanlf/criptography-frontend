@@ -27,7 +27,7 @@ function TodosUsuarios() {
             setIsLoading(true);
             try {
                 // Endpoint para buscar todos os usuários
-                const response = await fetch(`${VITE_API_URL}/users/all`); 
+                const response = await fetch(`${import.meta.env.VITE_RENDER_API_URL}/users/all`); 
                 
                 if (!response.ok) {
                     // Lança um erro para ser pego pelo catch
