@@ -32,7 +32,7 @@ function Login() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, senha: password }), 
+                body: JSON.stringify({ username, password }),
             });
 
             if (response.ok) {
