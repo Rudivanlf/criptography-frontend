@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // 1. Defina a URL BASE DA SUA API DO RENDER aqui!
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_RENDER_API_URL;
 
 function Register() {
     const [formData, setFormData] = useState({

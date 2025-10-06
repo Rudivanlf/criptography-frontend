@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 // ATENÇÃO: SUBSTITUA PELA URL REAL DO SEU BACKEND NO RENDER
-const RENDER_API_URL = import.meta.env.VITE_API_URL;  
+const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL;  
 
 function Login() {
     // ... (Hooks de estado e funções de manipulação de input) ...

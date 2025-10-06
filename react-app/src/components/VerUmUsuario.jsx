@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom'; 
 
 // ATENÇÃO: SUBSTITUA PELA URL BASE DO SEU BACKEND NO RENDER
-const apiUrl = import.meta.env.VITE_API_URL; 
+const apiUrl = import.meta.env.VITE_RENDER_API_URL; 
 
 function VerUmUsuario() {
     // 1. CORRIGIDO: Obtém o parâmetro 'username' da URL

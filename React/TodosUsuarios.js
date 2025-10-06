@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 
 // 2. Defina a URL BASE DA SUA API DO RENDER aqui!
-const apiUrl = import.meta.env.VITE_API_URL; 
+const apiUrl = import.meta.env.VITE_RENDER_API_URL; 
 
 function TodosUsuarios() {
     const [usuarios, setUsuarios] = useState([]);

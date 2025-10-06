@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 // 1. Defina a URL BASE DA SUA API DO RENDER aqui!
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_RENDER_API_URL;
 
 function Login() {
     // CORREÇÃO CRÍTICA: Definindo o valor do estado E a função de atualização (setter)
