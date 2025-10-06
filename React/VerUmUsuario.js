@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom'; 
 
 // 1. Defina a URL BASE DA SUA API DO RENDER aqui!
-const RENDER_API_URL = import.meta.env.VITE_RENDER_API_URL; 
+const RENDER_API_URL = import.meta.env.VITE_API_URL; 
 
 // 2. CORRIGIDO: Não espera mais a prop 'userId'.
 function VerUmUsuario() {
