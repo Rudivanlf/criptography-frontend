@@ -87,7 +87,7 @@ function TodosUsuarios() {
                                 <div className="user-info">
                                     <p><strong>Username:</strong> {user.username}</p>
                                     <p className="encryption-data">
-                                        <strong>Senha Criptografada:</strong> {user.senha_criptografada}
+                                        <strong>Senha Criptografada:</strong> {user.password}
                                     </p>
                                 </div>
                             </li>

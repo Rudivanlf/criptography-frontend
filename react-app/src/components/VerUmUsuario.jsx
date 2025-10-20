@@ -28,7 +28,7 @@ function VerUmUsuario() {
 
             try {
                 // 2. CORRIGIDO: Usa a URL base do Render e o username do useParams
-                const response = await fetch(`${import.meta.env.VITE_RENDER_API_URL}/users/${id}`); 
+                const response = await fetch(`${import.meta.env.VITE_RENDER_API_URL}/users/${username}`); 
 
                 
                 if (!response.ok) {

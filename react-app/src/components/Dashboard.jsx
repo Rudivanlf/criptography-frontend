@@ -51,14 +51,6 @@
                                 required
                             />
                         </div>
-                        
-                        <div className="dashboard-option">
-                        <p>E veja um usuário cadastrado no sistema.</p>
-                        {/* Link direto para a rota da lista */}
-                        <Link to="/verumusuario" className="button-link">
-                            Ver Todos os Usuários
-                        </Link>
-                    </div>
                     </div>
                 </div>
             </div>
