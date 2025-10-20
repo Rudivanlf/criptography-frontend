@@ -42,14 +42,13 @@
                         <h2>Ver Login de um Usuário Específico</h2>
                         <p>Digite o nome de usuário (username) para consultar as informações:</p>
                         
-                        <div>
-                            <input
-                                type="text"
-                                placeholder="Nome de Usuário"
-                                value={searchUsername}
-                                onChange={handleInputChange}
-                                required
-                            />
+                       <div className="actions">
+                                <button 
+                                    onClick={handleSearch}
+                                     disabled={!searchUsername.trim()}
+                                >
+                                🔍 Buscar Usuário
+                            </button>
                         </div>
                     </div>
                 </div>

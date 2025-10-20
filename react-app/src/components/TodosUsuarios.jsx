@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'; // 1. Adicionado useEffect
 import { useNavigate } from 'react-router-dom'; 
+import EncryptedPasswordDisplay from './EncryptedPasswordDisplay';
 
 // 2. Defina a URL BASE DA SUA API DO RENDER aqui!
 const apiUrl = import.meta.env.VITE_RENDER_API_URL; 
@@ -79,24 +80,23 @@ function TodosUsuarios() {
                 
                 {/* Exibe a lista se houver usuários, ou a mensagem de vazio */}
                 {usuarios.length > 0 ? (
-                    <ul className="user-list">
-                        {usuarios.map(user => (
-                            // NOTA: Os campos 'id', 'username' e 'senha_criptografada'
-                            // devem ser os mesmos nomes que seu backend retorna.
-                            <li key={user.id} className="user-item">
-                                <div className="user-info">
-                                    <p><strong>Username:</strong> {user.username}</p>
-                                    <p className="encryption-data">
-                                        <strong>Senha Criptografada:</strong> {user.password}
-                                    </p>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    // Mensagem se a API retornar um array vazio
-                    <p>Nenhum usuário cadastrado para exibir.</p>
-                )}
+    <ul className="user-list">
+        {usuarios.map(user => (
+            <li key={user.id} className="user-item">
+                <div className="user-info">
+                    <p><strong>Username:</strong> {user.username}</p>
+                    <p><strong>Nome:</strong> {user.name}</p>
+                    <div className="encryption-data-wrapper">
+                        <strong>Senha Criptografada:</strong>
+                        <EncryptedPasswordDisplay password={user.password} />
+                    </div>
+                </div>
+            </li>
+        ))}
+    </ul>
+) : (
+    <p>Nenhum usuário cadastrado para exibir.</p>
+)}
 
                 <div className="actions">
                     <button onClick={handleVoltar}>

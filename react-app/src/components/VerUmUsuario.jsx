@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 // INCLUÍDO: useParams para ler a URL e Link para o botão de voltar
 import { useParams, Link } from 'react-router-dom'; 
+import EncryptedPasswordDisplay from './EncryptedPasswordDisplay';
 
 // ATENÇÃO: SUBSTITUA PELA URL BASE DO SEU BACKEND NO RENDER
 const apiUrl = import.meta.env.VITE_RENDER_API_URL; 
@@ -22,33 +23,30 @@ function VerUmUsuario() {
         }
 
         const buscarUsuario = async () => {
-            setCarregando(true);
-            setErro('');
-            setUsuario(null);
+    setCarregando(true);
+    setErro('');
+    setUsuario(null);
 
-            try {
-                // 2. CORRIGIDO: Usa a URL base do Render e o username do useParams
-                const response = await fetch(`${import.meta.env.VITE_RENDER_API_URL}/users/${username}`); 
+    try {
+        // Usa o novo endpoint /byUsername
+        const response = await fetch(
+            `${import.meta.env.VITE_RENDER_API_URL}/users/byUsername/${username}`
+        ); 
 
-                
-                if (!response.ok) {
-                    // Trata o caso em que o usuário não é encontrado (404)
-                    throw new Error(`Usuário não encontrado: ${username}`);
-                }
+        if (!response.ok) {
+            throw new Error(`Usuário não encontrado: ${username}`);
+        }
 
-                const data = await response.json();
-                
-                // 3. ATENÇÃO: Confirme se o campo é 'senha_criptografada' ou 'password'
-                // Assumindo que o backend retorna o objeto do usuário (data)
-                setUsuario(data); 
+        const data = await response.json();
+        setUsuario(data); 
 
-            } catch (error) {
-                console.error('Falha na requisição:', error);
-                setErro(error.message);
-            } finally {
-                setCarregando(false);
-            }
-        };
+    } catch (error) {
+        console.error('Falha na requisição:', error);
+        setErro(error.message);
+    } finally {
+        setCarregando(false);
+    }
+};
 
         buscarUsuario();
     // O hook é executado sempre que o 'username' (do useParams) mudar.
@@ -83,8 +81,7 @@ function VerUmUsuario() {
                     </div>
                     <div className="detail-item">
                         <label>Senha Criptografada:</label>
-                        {/* 5. ATENÇÃO: Use o nome exato do campo que o backend retorna */}
-                        <span className="encryption-data detail-value">{usuario.senha_criptografada || usuario.password || 'Hash não disponível'}</span>
+                        <EncryptedPasswordDisplay password={usuario.password} />
                     </div>
                 </div>
                 
