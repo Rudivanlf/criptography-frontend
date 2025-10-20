@@ -174,15 +174,21 @@ button:disabled {
     border-left: 4px solid #0b74ff;
     margin-top: 8px;
     font-family: 'Courier New', monospace;
-    font-size: 12px;
-    word-break: break-all;
+    font-size: 11px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
     color: #333;
     position: relative;
+    max-height: 120px;
+    overflow-y: auto;
+    line-height: 1.4;
 }
 
 .encryption-data::before {
     content: "🔒 ";
     margin-right: 8px;
+    display: inline-block;
 }
 
 /* Efeito ao passar o mouse */
@@ -195,16 +201,18 @@ button:disabled {
 .copy-button {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
+    gap: 6px;
+    padding: 10px 14px;
     margin-left: 10px;
     background-color: #0b74ff;
     color: white;
     border: none;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 13px;
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .copy-button:hover {
@@ -213,21 +221,38 @@ button:disabled {
     box-shadow: 0 2px 8px rgba(11, 116, 255, 0.3);
 }
 
+.copy-button:active {
+    transform: translateY(0);
+}
+
 .copy-button.copied {
     background-color: #28a745;
 }
 
 /* Container para a senha com botão */
 .encryption-container {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto;
     gap: 10px;
-    margin-top: 8px;
+    align-items: flex-start;
+    margin-top: 10px;
+    width: 100%;
 }
 
 .encryption-container .encryption-data {
-    flex: 1;
+    grid-column: 1;
     margin-top: 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+}
+
+.encryption-container .copy-button {
+    grid-column: 2;
+    grid-row: 1;
+    margin-left: 0;
+    height: 44px;
 }
 
 /* Estilo da lista de usuários */
@@ -294,13 +319,22 @@ button:disabled {
     border-radius: 4px;
 }
 
+/* Responsivo */
 @media (max-width: 600px) {
-  .user-table {
-      display: block;
-      overflow-x: auto;
-  }
-  .user-table th,
-  .user-table td {
-      min-width: 150px;
-  }
+    .encryption-container {
+        grid-template-columns: 1fr;
+    }
+
+    .encryption-container .encryption-data {
+        grid-column: 1;
+    }
+
+    .encryption-container .copy-button {
+        grid-column: 1;
+    }
+
+    .copy-button {
+        width: 100%;
+        justify-content: center;
+    }
 }
