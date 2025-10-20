@@ -1,10 +1,4 @@
-.App {
-display: flex;
-  align-items: center; 
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #f4f6f8;
-}
+/* Adicione ou substitua isso no seu App.css */
 
 html, body, #root {
     height: 100%;
@@ -14,14 +8,64 @@ html, body, #root {
     background-color: #f4f6f8; /* Garante fundo claro */
 }
 
+.App {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f6f8;
+}
+
 .card {
-  background: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 380px;
-  margin: 0 auto; /* Ensures horizontal centering */
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.user-list-card {
+    max-width: 900px;
+    min-height: auto;
+    max-height: none;
+}
+
+/* Garante que a lista de usuários não tenha fundo escuro */
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    background-color: transparent;
+}
+
+.user-item {
+    background-color: #f9f9f9;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border-left: 4px solid #0b74ff;
+    transition: all 0.3s ease;
+}
+
+.user-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #f0f4f8;
+}
+
+/* Remover qualquer fundo preto ou escuro */
+body {
+    background-color: #f4f6f8 !important;
+}
+
+#root {
+    background-color: #f4f6f8 !important;
+}
+
+/* Se houver elemento com fundo preto, remover */
+main, section, article {
+    background-color: transparent;
 }
 
 h1 {
